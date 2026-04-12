@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parcel_tracker_lite/features/parcels/controllers/parcels_controller.dart';
 import 'package:parcel_tracker_lite/features/parcels/models/parcel.dart';
+import 'package:parcel_tracker_lite/features/parcels/screens/parcel_details_screen.dart';
 import 'package:parcel_tracker_lite/features/parcels/widgets/add_parcel_dialog.dart';
 import 'package:parcel_tracker_lite/features/parcels/widgets/parcel_list_item.dart';
 
@@ -66,7 +67,11 @@ class _ParcelListScreenState extends State<ParcelListScreen> {
         return ParcelListItem(
           parcel: parcel,
           onTap: () {
-            // Navigate to parcel details screen here
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const ParcelDetailScreen(),
+              ),
+            );
           },
         );
       },
@@ -90,23 +95,23 @@ class _ParcelListScreenState extends State<ParcelListScreen> {
   }
 
   Future<void> _openAddParcelDialog() async {
-  await showDialog<void>(
-    context: context,
-    builder: (_) {
-      return AddParcelDialog(
-        onAddParcel: ({
-          required String trackingNumber,
-          required int postcode,
-        }) async {
-          await _controller.addParcel(
-            trackingNumber: trackingNumber,
-            postCode: postcode,
-          );
+    await showDialog<void>(
+      context: context,
+      builder: (_) {
+        return AddParcelDialog(
+          onAddParcel: ({
+            required String trackingNumber,
+            required int postcode,
+          }) async {
+            await _controller.addParcel(
+              trackingNumber: trackingNumber,
+              postCode: postcode,
+            );
 
-          return _controller.errorMessage;
-        },
-      );
-    },
-  );
-}
+            return _controller.errorMessage;
+          },
+        );
+      },
+    );
+  }
 }
