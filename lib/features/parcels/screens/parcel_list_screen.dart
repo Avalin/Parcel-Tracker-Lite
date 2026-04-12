@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class ParcelListScreen extends StatefulWidget {
+  const ParcelListScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ParcelListScreen> createState() => _ParcelListScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _ParcelListScreenState extends State<ParcelListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +16,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text('Mine pakker'),
       ),
       body: Center(
-        child: Center(
-          child: Text("Ingen pakker endnu.")
-        )
+        child: Text("Ingen pakker endnu.")
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parcel_tracker_lite/features/parcels/screens/my_home_page.dart';
+import 'package:parcel_tracker_lite/features/parcels/screens/parcel_list_screen.dart';
 
 class ParcelTrackerLite extends StatelessWidget {
   const ParcelTrackerLite({super.key});
@@ -9,9 +9,9 @@ class ParcelTrackerLite extends StatelessWidget {
     return MaterialApp(
       title: 'Parcel Tracker Lite',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(seedColor: Colors.lightBlue),
       ),
-      home: const MyHomePage(),
+      home: const ParcelListScreen(),
     );
   }
 }
