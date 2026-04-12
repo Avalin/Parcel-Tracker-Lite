@@ -9,7 +9,8 @@ class TrackingService {
     required String trackingNumber,
     required int postcode,
   }) async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    final delay = 500 + _random.nextInt(2500); // i mellem 500 og 3000 ms
+    await Future.delayed(Duration(milliseconds: delay));
 
     final statuses = [
       ParcelStatus.created,
