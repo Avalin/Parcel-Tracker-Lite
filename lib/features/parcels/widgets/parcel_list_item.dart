@@ -20,7 +20,10 @@ class ParcelListItem extends StatelessWidget {
       button: true,
       child: ListTile(
         title: Text(parcel.trackingNumber),
-        subtitle: Text(parcel.parcelStatus.label),
+        subtitle: Text(
+          parcel.parcelStatus.label, 
+          style: TextStyle(color: parcel.parcelStatus.color)
+        ),
         trailing: const Icon(Icons.chevron_right),
         onTap: onTap,
       ),
