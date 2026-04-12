@@ -94,3 +94,4 @@ Hvis jeg havde haft mere tid, ville jeg blandt andet:
 * Forbedre datoformattering og generel UI-polish
 * Tilføjet pull-to-refresh
 * Tests! Fx. på AddParcel
+* I den nuværende løsning lukkes dialogen også ved fejl ved tilføjelse af pakke... Et næste skridt ville være kun at lukke dialogen ved succes og ellers lade den være åben, så man ikke mister sit input 
