@@ -8,30 +8,11 @@ class ParcelListScreen extends StatefulWidget {
 
   @override
   State<ParcelListScreen> createState() => _ParcelListScreenState();
-
-  Widget _buildBody(List<Parcel> parcels) {
-    if (parcels.isEmpty) {
-      return const Center(child: Text('Ingen pakker endnu'));
-    }
-
-    return ListView.builder(
-      itemCount: parcels.length,
-      itemBuilder: (context, index) {
-        final parcel = parcels[index];
-        return ParcelListItem(
-          parcel: parcel,
-          onTap: () {
-            // Navigate to parcel details screen her
-          },
-        );
-      },
-    );
-  }
 }
 
 class _ParcelListScreenState extends State<ParcelListScreen> {
   late final ParcelsController _controller;
-  
+
   @override
   void initState() {
     super.initState();
@@ -52,19 +33,56 @@ class _ParcelListScreenState extends State<ParcelListScreen> {
     setState(() {});
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildBody() {
+    if (_controller.isLoading) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
+    if (_controller.errorMessage != null) {
+      return Center(
+        child: Text(_controller.errorMessage!),
+      );
+    }
+
     final parcels = _controller.parcels;
 
+    if (parcels.isEmpty) {
+      return const Center(
+        child: Text('Ingen pakker endnu'),
+      );
+    }
+
+    return _buildParcelList(parcels);
+  }
+
+  Widget _buildParcelList(List<Parcel> parcels) {
+    return ListView.builder(
+      itemCount: parcels.length,
+      itemBuilder: (context, index) {
+        final parcel = parcels[index];
+        return ParcelListItem(
+          parcel: parcel,
+          onTap: () {
+            // Navigate to parcel details screen here
+          },
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Mine pakker'),
       ),
-      body: widget._buildBody(parcels),
+      body: _buildBody(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add parcel flow her
+          // Add parcel flow here
         },
         tooltip: 'Tilføj pakke',
         child: const Icon(Icons.add),
