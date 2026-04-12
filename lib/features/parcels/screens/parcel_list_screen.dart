@@ -69,7 +69,7 @@ class _ParcelListScreenState extends State<ParcelListScreen> {
           onTap: () {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (_) => const ParcelDetailScreen(),
+                builder: (_) => ParcelDetailScreen(parcel: parcel),
               ),
             );
           },
