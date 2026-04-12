@@ -12,4 +12,22 @@ class Parcel {
     required this.postCode,
     required this.parcelStatus,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'trackingNumber': trackingNumber,
+      'postcode': postCode,
+      'latestStatus': parcelStatus.name
+    };
+  }
+
+  factory Parcel.fromJson(Map<String, dynamic> json) {
+    return Parcel(
+      id: json['id'] as String,
+      trackingNumber: json['trackingNumber'] as String,
+      postCode: json['postcode'] as int,
+      parcelStatus: ParcelStatus.values.byName(json['latestStatus'] as String),
+    );
+  }
 }
