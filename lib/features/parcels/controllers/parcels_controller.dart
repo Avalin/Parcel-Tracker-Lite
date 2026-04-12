@@ -30,4 +30,40 @@ class ParcelsController extends ChangeNotifier {
       notifyListeners();
     }
   }
+
+  Future<void> addParcel({
+    required String trackingNumber,
+    required int postCode,
+  }) async {
+    _errorMessage = null;
+
+    final trimmedTrackingNumber = trackingNumber.trim();
+
+    if (trimmedTrackingNumber.isEmpty) {
+      _errorMessage = 'Trackingnummer må ikke være tomt.';
+      notifyListeners();
+      return;
+    }
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+
+      final parcel = Parcel(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        trackingNumber: trimmedTrackingNumber,
+        postCode: postCode,
+        parcelStatus: ParcelStatus.created
+      );
+
+      _parcels.insert(0, parcel);
+    } catch (error) {
+      _errorMessage = 'Kunne ikke tilføje pakke.';
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 }
