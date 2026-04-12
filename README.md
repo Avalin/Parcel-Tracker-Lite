@@ -82,6 +82,7 @@ Det holder backend-simulering adskilt fra controlleren og gør ansvarsfordelinge
 Jeg har arbejdet med basic accessibility ved at:
 
 * Tilføje `Semantics` på listeelementer og detaljefelter
+* Vælge mørkere statusfarver for bedre kontrast på lys baggrund
 
 # Hvis jeg havde haft mere tid
 
