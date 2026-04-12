@@ -92,4 +92,5 @@ Hvis jeg havde haft mere tid, ville jeg blandt andet:
 * Simulere backend-fejl mere eksplicit i `TrackingService`
 * Overveje et mere skalerbart state management setup ved flere features, såsom Riverpod
 * Forbedre datoformattering og generel UI-polish
+* Tilføjet pull-to-refresh
 * Tests! Fx. på AddParcel
