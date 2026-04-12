@@ -9,7 +9,7 @@ class ParcelTrackerLite extends StatelessWidget {
     return MaterialApp(
       title: 'Parcel Tracker Lite',
       theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.lightBlue),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
       ),
       home: const ParcelListScreen(),
     );
