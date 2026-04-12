@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parcel_tracker_lite/features/parcels/controllers/parcels_controller.dart';
 import 'package:parcel_tracker_lite/features/parcels/models/parcel.dart';
+import 'package:parcel_tracker_lite/features/parcels/widgets/add_parcel_dialog.dart';
 import 'package:parcel_tracker_lite/features/parcels/widgets/parcel_list_item.dart';
 
 class ParcelListScreen extends StatefulWidget {
@@ -81,12 +82,31 @@ class _ParcelListScreenState extends State<ParcelListScreen> {
       ),
       body: _buildBody(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add parcel flow here
-        },
+        onPressed: _openAddParcelDialog,
         tooltip: 'Tilføj pakke',
         child: const Icon(Icons.add),
       ),
     );
   }
+
+  Future<void> _openAddParcelDialog() async {
+  await showDialog<void>(
+    context: context,
+    builder: (_) {
+      return AddParcelDialog(
+        onAddParcel: ({
+          required String trackingNumber,
+          required int postcode,
+        }) async {
+          await _controller.addParcel(
+            trackingNumber: trackingNumber,
+            postCode: postcode,
+          );
+
+          return _controller.errorMessage;
+        },
+      );
+    },
+  );
+}
 }
