@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parcel_tracker_lite/features/parcels/enums/parcel_status.dart';
+import 'package:parcel_tracker_lite/features/parcels/controllers/parcels_controller.dart';
 import 'package:parcel_tracker_lite/features/parcels/models/parcel.dart';
 import 'package:parcel_tracker_lite/features/parcels/widgets/parcel_list_item.dart';
 
@@ -30,13 +30,31 @@ class ParcelListScreen extends StatefulWidget {
 }
 
 class _ParcelListScreenState extends State<ParcelListScreen> {
+  late final ParcelsController _controller;
+  
+  @override
+  void initState() {
+    super.initState();
+    _controller = ParcelsController();
+    _controller.addListener(_onControllerChanged);
+    _controller.loadParcels();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onControllerChanged);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onControllerChanged() {
+    if (!mounted) return;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Dummy data (midlertidigt)
-    final parcels = [
-      Parcel(id: '1', trackingNumber: '123456789', postCode: '1000', parcelStatus: ParcelStatus.inTransit),
-      Parcel(id: '2', trackingNumber: '987654321', postCode: '2000', parcelStatus: ParcelStatus.delivered),
-    ];
+    final parcels = _controller.parcels;
 
     return Scaffold(
       appBar: AppBar(

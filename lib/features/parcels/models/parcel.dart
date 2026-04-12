@@ -3,7 +3,7 @@ import 'package:parcel_tracker_lite/features/parcels/enums/parcel_status.dart';
 class Parcel {
   final String id;
   final String trackingNumber;
-  final String postCode;
+  final int postCode;
   final ParcelStatus parcelStatus;
 
   const Parcel({
