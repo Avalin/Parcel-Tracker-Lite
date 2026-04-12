@@ -32,8 +32,6 @@ class ParcelsController extends ChangeNotifier {
       _parcels
         ..clear()
         ..addAll(storedParcels);
-        
-      await _storageService.saveParcels(_parcels);
     } catch (error) {
       _errorMessage = 'Kunne ikke indlæse pakker.';
     } finally {
