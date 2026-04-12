@@ -12,32 +12,15 @@ class ParcelListItem extends StatelessWidget {
     this.onTap,
   });
 
-  String _statusText(ParcelStatus status) {
-    switch (status) {
-      case ParcelStatus.outForDelivery:
-        return 'Ude til levering';
-      case ParcelStatus.inTransit:
-        return 'Undervejs';
-      case ParcelStatus.delivered:
-        return 'Leveret';
-      case ParcelStatus.delayed:
-        return 'Forsinket';
-      case ParcelStatus.created:
-        return 'Oprettet';
-      case ParcelStatus.lost:
-        return 'Forsvundet';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Semantics(
       label:
-          'Pakke ${parcel.trackingNumber}, status ${_statusText(parcel.parcelStatus)}',
+          'Pakke ${parcel.trackingNumber}, status ${parcel.parcelStatus.label}',
       button: true,
       child: ListTile(
         title: Text(parcel.trackingNumber),
-        subtitle: Text(_statusText(parcel.parcelStatus)),
+        subtitle: Text(parcel.parcelStatus.label),
         trailing: const Icon(Icons.chevron_right),
         onTap: onTap,
       ),
