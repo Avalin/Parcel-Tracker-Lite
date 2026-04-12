@@ -31,17 +31,17 @@ extension ParcelStatusX on ParcelStatus {
   Color get color {
     switch (this) {
       case ParcelStatus.created:
-        return Colors.grey;
+        return Colors.grey.shade700;
       case ParcelStatus.inTransit:
-        return Colors.blue;
+        return Colors.blue.shade700;
       case ParcelStatus.delivered:
-        return Colors.green;
+        return Colors.green.shade800;
       case ParcelStatus.delayed:
-        return Colors.orange;
+        return Colors.deepOrange.shade900;
       case ParcelStatus.outForDelivery:
-        return Colors.yellow;
+        return Colors.brown.shade700;
       case ParcelStatus.lost:
-        return Colors.red;
+        return Colors.red.shade700;
     }
   }
 }
