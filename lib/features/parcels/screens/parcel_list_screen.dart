@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parcel_tracker_lite/features/parcels/enums/parcel_status.dart';
 import 'package:parcel_tracker_lite/features/parcels/models/parcel.dart';
+import 'package:parcel_tracker_lite/features/parcels/widgets/parcel_list_item.dart';
 
 class ParcelListScreen extends StatefulWidget {
   const ParcelListScreen({super.key});
@@ -17,9 +18,8 @@ class ParcelListScreen extends StatefulWidget {
       itemCount: parcels.length,
       itemBuilder: (context, index) {
         final parcel = parcels[index];
-        return ListTile(
-          title: Text(parcel.trackingNumber),
-          subtitle: Text('Status: ${parcel.parcelStatus} - Postnummer: ${parcel.postCode}'),
+        return ParcelListItem(
+          parcel: parcel,
           onTap: () {
             // Navigate to parcel details screen her
           },
