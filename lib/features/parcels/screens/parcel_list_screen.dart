@@ -13,7 +13,19 @@ class ParcelListScreen extends StatefulWidget {
       return const Center(child: Text('Ingen pakker endnu'));
     }
 
-    return const Center(child: Text('To do: Vis liste af pakker her')); // Placeholder for parcel list
+    return ListView.builder(
+      itemCount: parcels.length,
+      itemBuilder: (context, index) {
+        final parcel = parcels[index];
+        return ListTile(
+          title: Text(parcel.trackingNumber),
+          subtitle: Text('Status: ${parcel.parcelStatus} - Postnummer: ${parcel.postCode}'),
+          onTap: () {
+            // Navigate to parcel details screen her
+          },
+        );
+      },
+    );
   }
 }
 
