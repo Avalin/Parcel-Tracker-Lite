@@ -60,7 +60,7 @@ class ParcelsController extends ChangeNotifier {
     try {
       final fetchedStatus = await _trackingService.fetchStatus(
         trackingNumber: trimmedTrackingNumber,
-        postcode: postCode,
+        postCode: postCode,
       );
 
       final parcel = Parcel(

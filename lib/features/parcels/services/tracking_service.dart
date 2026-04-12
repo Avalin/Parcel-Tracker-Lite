@@ -7,7 +7,7 @@ class TrackingService {
 
   Future<ParcelStatus> fetchStatus({
     required String trackingNumber,
-    required int postcode,
+    required int postCode,
   }) async {
     final delay = 500 + _random.nextInt(2500); // i mellem 500 og 3000 ms
     await Future.delayed(Duration(milliseconds: delay));
