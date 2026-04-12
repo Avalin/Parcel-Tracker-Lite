@@ -1,13 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:parcel_tracker_lite/features/parcels/enums/parcel_status.dart';
 import 'package:parcel_tracker_lite/features/parcels/models/parcel.dart';
+import 'package:parcel_tracker_lite/features/parcels/services/parcel_storage_service.dart';
 
 class ParcelsController extends ChangeNotifier {
-  
-  final _parcels = [
-    Parcel(id: '1', trackingNumber: '123456789', postCode: 1000, parcelStatus: ParcelStatus.inTransit),
-    Parcel(id: '2', trackingNumber: '987654321', postCode: 2000, parcelStatus: ParcelStatus.delivered),
-  ];
+  ParcelsController({
+    ParcelStorageService? storageService,
+  }) : _storageService = storageService ?? ParcelStorageService();
+
+  final ParcelStorageService _storageService;
+
+  final List<Parcel> _parcels = [];
 
   bool _isLoading = false;
   String? _errorMessage;
@@ -22,7 +25,12 @@ class ParcelsController extends ChangeNotifier {
     notifyListeners();
 
     try {
-      await Future.delayed(const Duration(milliseconds: 500));
+      final storedParcels = await _storageService.loadParcels();
+      _parcels
+        ..clear()
+        ..addAll(storedParcels);
+        
+      await _storageService.saveParcels(_parcels);
     } catch (error) {
       _errorMessage = 'Kunne ikke indlæse pakker.';
     } finally {
@@ -59,6 +67,7 @@ class ParcelsController extends ChangeNotifier {
       );
 
       _parcels.insert(0, parcel);
+      await _storageService.saveParcels(_parcels);
     } catch (error) {
       _errorMessage = 'Kunne ikke tilføje pakke.';
     } finally {
