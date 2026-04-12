@@ -11,7 +11,7 @@ class ParcelTrackerLite extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Parcel Tracker Lite'),
+      home: const MyHomePage(),
     );
   }
 }
