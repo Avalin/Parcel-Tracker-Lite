@@ -1,21 +1,23 @@
 # Parcel Tracker Lite
 
-En lille Flutter-app til at tilføje og tracke pakker via tracking-nummer.
+A small Flutter app for adding and tracking parcels via tracking number. This was made as a small showcase for a job interview
 
-# Sådan kører du projektet: 
-- git clone https://github.com/Avalin/parcel_tracker_lite.git
-- cd parcel_tracker_lite
-- flutter pub get
-- flutter run
+# How to run the project:
+- `git clone https://github.com/Avalin/parcel_tracker_lite.git`
+- `cd parcel_tracker_lite`
+- `flutter pub get`
+- `flutter run`
 
-# Kræver:
+# Requirements:
 Flutter (latest stable)
-Android emulator eller iOS simulator burde virke (Jeg har kun testet på Android)
 
-# Arkitektur & struktur
+Android emulator or iOS simulator should work (I have only tested on Android)
 
-Jeg har valgt en feature-baseret struktur (feature-first) med let lagdeling:
+# Architecture & Structure
 
+I chose a feature-based structure (feature-first) with light layering:
+
+```txt
 lib/
   features/
     parcels/
@@ -24,74 +26,76 @@ lib/
       controllers/
       screens/
       widgets/
+```
 
-# Hvorfor denne struktur?
-- Samler alt relateret til én feature samme sted
-- Gør det nemt at skalere appen senere
+# Why this structure?
+- Keeps everything related to a single feature in one place
+- Makes the app easier to scale later on
 
-Jeg fravalgte en klassisk layer-first struktur, fordi den hurtigt spreder relateret kode ud i mange mapper (selvom det giver mening for en lille MVP som det her jo er), og DDP (domain, data, presentation) fordi det hurtigt bliver lidt for tungt i en lille app.
+I opted out of a classic layer-first structure because it quickly spreads related code across many folders (even though it still makes sense for a small MVP like this), and I avoided DDP (domain, data, presentation) because it becomes a bit too heavy for a small app.
 
-Tydelig adskillelse mellem:
-* UI (screens, widgets)
-* State / logik (controllers)
-* Data / backend-simulering (services)
-* Data-modeller (models)
+Clear separation between:
+- UI (`screens`, `widgets`)
+- State / logic (`controllers`)
+- Data / backend simulation (`services`)
+- Data models (`models`)
 
-# Funktionalitet
+# Functionality
 
-* Tilføjelse af pakker via trackingnummer og postnummer
-* Visning af pakker i en liste
-* Simpel statusvisning (via enum)
-* Lidt loading- og fejl-state håndtering
-* Simpel detaljeside for hver pakke
+- Add parcels using tracking number and postal code
+- Display parcels in a list
+- Simple status display (via enum)
+- Basic loading and error state handling
+- Simple detail page for each parcel
 
-# Statushåndtering
+# Status handling
 
-- Parcel-status er modelleret som en enum for at sikre type safety.
-- Mapping til visning (label og farve) håndteres via extension på enum’en, for at:
-  * holde logik tæt på data
-  * undgå duplikation i UI-laget (hvis vi viser labels flere steder fx)
+- Parcel status is modeled as an enum to ensure type safety.
+- Mapping to presentation (label and color) is handled through extensions on the enum in order to:
+  - keep logic close to the data
+  - avoid duplication in the UI layer (for example if labels are shown in multiple places)
 
-I en større app ville jeg flytte UI-specifikke ting (fx farver og labels) til et mere dedikeret presentation-/localization-lag.
+In a larger app, I would move UI-specific things (such as colors and labels) into a more dedicated presentation/localization layer.
 
-# Modelvalg
+# Model choices
 
-Jeg har valgt plain Dart-modeller med immutable felter (`final`) frem for fx `freezed`, da modellerne i denne opgave er små og enkle, og jeg gerne ville holde løsningen let og uden unødig code generation.
+I chose plain Dart models with immutable (`final`) fields instead of something like `freezed`, since the models in this assignment are small and simple, and I wanted to keep the solution lightweight and avoid unnecessary code generation.
 
-Hvis modellen eller state-håndteringen blev mere kompleks, ville `freezed` være et oplagt valg, især pga. `copyWith`, value equality og mindre boilerplate.
+If the models or state handling became more complex, `freezed` would be an obvious choice, especially because of `copyWith`, value equality, and reduced boilerplate.
 
 # State management
 
-Jeg har valgt en simpel `ChangeNotifier`-baseret controller til state management.
+I chose a simple `ChangeNotifier`-based controller for state management.
 
-Det giver en tydelig separation mellem UI og state uden at introducere unødig kompleksitet i forhold til opgavens scope. Til en større app ville jeg bruge `Riverpod`, men til denne opgave vurderede jeg, at `ChangeNotifier` var et passende valg i forhold til scope og tidsramme.
+It provides a clear separation between UI and state without introducing unnecessary complexity relative to the scope of the assignment. For a larger app, I would use `Riverpod`, but for this task I felt that `ChangeNotifier` was an appropriate choice given the scope and timeframe.
 
-# Persistens
+# Persistence
 
-Jeg har valgt `shared_preferences` til lokal persistens, da datamængden i opgaven er lille, og løsningen er hurtig at implementere...
-Hvis datamængden voksede markant, eller hvis appen fik behov for mere avancerede queries og relationer, ville jeg i stedet vælge en databasebaseret løsning som fx `Drift`.
+I chose `shared_preferences` for local persistence because the amount of data in the assignment is small, and the solution is quick to implement.
+
+If the amount of data grew significantly, or if the app needed more advanced queries and relationships, I would instead choose a database-based solution such as `Drift`.
 
 # Data / fake backend
 
-Jeg har introduceret en simpel `TrackingService`, som simulerer et backend-opslag via en `Future` med forsinkelse og returnerer en parcel-status.
+I introduced a simple `TrackingService` that simulates a backend lookup using a delayed `Future` and returns a parcel status.
 
-Det holder backend-simulering adskilt fra controlleren og gør ansvarsfordelingen tydeligere.
+This keeps the backend simulation separated from the controller and makes responsibilities clearer.
 
 # Accessibility
 
-Jeg har arbejdet med basic accessibility ved at:
+I worked with basic accessibility by:
 
-* Tilføje `Semantics` på listeelementer og detaljefelter
-* Vælge mørkere statusfarver for bedre kontrast på lys baggrund
+- Adding `Semantics` to list items and detail fields
+- Choosing darker status colors for better contrast on light backgrounds
 
-# Hvis jeg havde haft mere tid
+# If I had more time
 
-Hvis jeg havde haft mere tid, ville jeg blandt andet:
-* Udvide med at man faktisk kan fjerne/delete pakker igen, evt. redigere dem
-* Udvide accessibility yderligere, fx med mere detaljerede labels/hints og systematisk test med skærmlæser
-* Simulere backend-fejl mere eksplicit i `TrackingService`
-* Overveje et mere skalerbart state management setup ved flere features, såsom Riverpod
-* Forbedre datoformattering og generel UI-polish
-* Tilføjet pull-to-refresh
-* Tests! Fx. på AddParcel
-* I den nuværende løsning lukkes dialogen også ved fejl ved tilføjelse af pakke... Et næste skridt ville være kun at lukke dialogen ved succes og ellers lade den være åben, så man ikke mister sit input 
+If I had more time, I would among other things:
+- Expand functionality so parcels can actually be removed/deleted and possibly edited
+- Improve accessibility further, for example with more detailed labels/hints and systematic screen reader testing
+- Simulate backend failures more explicitly in `TrackingService`
+- Consider a more scalable state management setup for multiple features, such as `Riverpod`
+- Improve date formatting and general UI polish
+- Add pull-to-refresh
+- Add tests! For example around `AddParcel`
+- In the current solution, the dialog also closes when adding a parcel fails. A next step would be to only close the dialog on success and otherwise keep it open so the user does not lose their input
